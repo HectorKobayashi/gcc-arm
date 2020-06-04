@@ -29,32 +29,6 @@ end:
     MOV r7, r0  @ breakpoint before swi
     SWI 0x123456
 
-array:
-    .word 0x1
-    .word 0x2
-    .word 0x3
-    .word 0x4
-    .word 0x5
-    .word 0x6
-    .word 0x7
-    .word 0x8
-    .word 0x9
-    .word 0x10
-    .word 0x11
-    .word 0x12
-    .word 0x13
-    .word 0x14
-    .word 0x15
-    .word 0x16
-    .word 0x17
-    .word 0x18
-    .word 0x19
-    .word 0x20
-    .word 0x21
-    .word 0x22
-    .word 0x23
-    .word 0x24
-    .word 0x25
-
+array: .word 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25
 y: .word 0x7
 index: .word 0x5
