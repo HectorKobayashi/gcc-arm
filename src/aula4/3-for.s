@@ -5,10 +5,10 @@
 @Vitor Hugo Perles - 9285492
 
 @Para compilar
-@arm-elf-gcc -Wall -g -o ../bin/aula4/2-pre-indexed 2-pre-indexed.s
+@arm-elf-gcc -Wall -g -o ../bin/aula4/3-for 3-for.s
 
 @To run and debug:
-@arm-elf-gdb 2-pre-indexed
+@arm-elf-gdb 3-for
 @na pasta bin/aula4
 @(gdb) target sim
 @(gdb) load
