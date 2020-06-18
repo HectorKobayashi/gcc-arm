@@ -17,9 +17,18 @@
 @(gdb) continue
 
     .text
-    .globl main
+    .global main
+ 
 main:
-
+    ldr r0, =0x0
+factorial:        
+    MOV r6,#0xA 
+    MOV r4,r6
+loop: 
+    SUBS r4, r4, #1    @ decrement next multiplier
+    MULNE r6, r4, r6   @ perform multiply
+    BNE loop           @ go again if not complete
 end:
     MOV r7, r0  @ breakpoint before swi
     SWI 0x123456
+    
