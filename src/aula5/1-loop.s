@@ -20,26 +20,11 @@
     .global main
  
 main:
-    ldr r0, addrA    @carrega endereço de a
-    ldr r1, addrB    @carrega endereço de b
+    adr r0, array_a    @carrega endereço de a
+    adr r1, array_b    @carrega endereço de b
     ldr r3, =0x0     @ i
     ldr r7, =0x07
     ldr r8, =0x08    @ carrega o numero 8
-inicializa_A:                @ coloca em 0x4000 e nos endereços seguintes os valores de um array A [1,1,1,1,1,1,1,1]
-    ldr r2, =0x1                
-    str r2, [r0, r3, lsl#2]
-    add r3, r3, #0x01        @ i = i + 1
-    cmp r8, r3               @ compara 8 com i 
-    bne inicializa_A         @ se o resultado for 0 para
-    ldr r3, =0x0             @ i = 0
-    ldr r2, =0x0
-inicializa_B:                @ coloca em 0x5000 e nos endereços seguintes os valores de um array B [0,1,2,3,4,5,6,7]
-    str r2, [r1, r3, lsl#2]
-    add r3, r3, #0x01        @ i = i + 1
-    add r2, r2, #0x01        @ incremenmta r2
-    cmp r8, r3               @ compara 8 com i 
-    bne inicializa_B         @ se o resultado for 0 para
-    ldr r3, =0x0             @ i = 0
 loop:
     sub r11, r7, r3             @ r11 = 7 - i
     ldr r2, [r1, r11, lsl#2]    @ carrega o valor guardado no endereco de B[7 - i] em r5
@@ -53,5 +38,3 @@ end:
 
 array_a: .word 1,1,1,1,1,1,1,1
 array_b: .word 0,1,2,3,4,5,6,7
-addrA: .word 0x4000
-addrB: .word 0x5000
