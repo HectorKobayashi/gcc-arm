@@ -27,8 +27,9 @@ main:
     BL func1
     B end
     
-@ func1(r4)
-@   
+@ func1(r1, r2, r3)
+@   r1, r2 e r3 devem ter o endereço para o valor desejado
+@   valor de retorno em r0
 func1:
     LDR r1, r1
     LDR r2, r2

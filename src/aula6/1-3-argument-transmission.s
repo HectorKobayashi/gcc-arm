@@ -21,25 +21,30 @@
  
 main:
     LDR r4, return_address
+    ADR r0, arguments
+    LDMIA r0, {r1-r3}
+    STMFD sp!, {r1-r3}
     BL func1
     B end
     
-@ func1(r4)
+@ func1(sp, r4)
 @   func 1 retorna o resultado em 4000
 @   Chama func2 para calcular
 func1:
+    LDMFD sp!, {r1-r3}
     STMFD sp!, {lr}
-    ADR r5, arguments
-    LDMIA r5, {r1-r3}
+    STMFD sp!, {r1, r2}
     BL func2
     ADD r0, r0, r3
     STMFD r4, {r0}
     LDMFD sp!, {lr}
     MOV pc, lr
 
-@ func2(sp, r4)
-@   Retorna o resultado de b * c
+
+@ func2(sp)
+@   Retorna o resultado de b * c em r0
 func2:
+    LDMFD sp!, {r1, r2}
     MUL r0, r1, r2
     MOV pc, lr
 
