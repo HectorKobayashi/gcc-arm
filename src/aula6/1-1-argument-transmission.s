@@ -21,28 +21,15 @@
  
 main:
     LDR r4, return_address
+    ADR r0, arguments
+    LDMIA r0, {r1-r3}
     BL func1
     B end
     
-@ func1(r4)
+@ r0 = func1(b, c, d)
 @   Transmite os argumentos b, c e d para os registradores
-@   que operation usa e chama operation
-@   Coloca o retorno na posição indicada no endereço r4.
+@   e retorna a = b * c + d em r0
 func1:
-    STMFD sp!, {r1-r3, lr}
-    ADR r0, arguments
-    LDMIA r0, {r1-r3}
-    BL operation
-    STMFD r4, {r0}
-    LDMFD sp!, {r1-r3, lr}
-    MOV pc, lr
-
-@ operation(b, c, d) = b x c + d
-@   b = r1
-@   c = r2
-@   d = r3
-@   retorno em r0
-operation:
     MUL r0, r1, r2
     ADD r0, r0, r3
     MOV pc, lr
