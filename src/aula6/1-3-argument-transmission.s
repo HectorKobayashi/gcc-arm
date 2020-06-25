@@ -25,34 +25,22 @@ main:
     B end
     
 @ func1(r4)
-@   Transmite os argumentos b, c e d para a pilha
-@   e chama func2()
-@   Coloca o retorno na posição indicada no endereço r4.
+@   func 1 retorna o resultado em 4000
+@   Chama func2 para calcular
 func1:
-    STMFD sp!, {r1-r5, lr}
+    STMFD sp!, {lr}
     ADR r5, arguments
     LDMIA r5, {r1-r3}
-    STMFD sp!, {r1,r2,r3}
     BL func2
+    ADD r0, r0, r3
     STMFD r4, {r0}
-    LDMFD sp!, {r1-r5, lr}
-    MOV pc, lr
-
-@ func2(sp, r4)
-@   Carrega os argumentos b,c e d da pilha em registradores para
-@   operation
-func2:
-    LDMFD sp!, {r1-r3}
-    STMFD sp!, {lr}    
-    BL operation
     LDMFD sp!, {lr}
     MOV pc, lr
 
-@ operation(argument_addresses) = aa[0] x aa[1] + aa[2]
-@   retorno em r0
-operation:
+@ func2(sp, r4)
+@   Retorna o resultado de b * c
+func2:
     MUL r0, r1, r2
-    ADD r0, r0, r3
     MOV pc, lr
 
 end:
