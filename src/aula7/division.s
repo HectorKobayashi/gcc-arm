@@ -38,8 +38,13 @@
 @       r5: resto                                                       @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 division:                                                                                                                             @
-    STMFD sp!, {r1,r2, r4, r6-r11,lr}                                                                                                            @
+    STMFD sp!, {r0,r1,r2, r4, r6-r11,lr}                                                                                                            @
                                                                                                                                       @
+    @Zero check
+    CMP r1, #0
+    LDREQ r3, =0
+    LDREQ r5, =0
+    BEQ endDivisao
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                                         @
     @   Definindo o tamanho do dividendo e do divisor                       @                                                         @
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                                         @
@@ -64,7 +69,7 @@ division:                                                                       
     BLT endDivisao            @ faz o desvio se o dividendo for menor que o divisor, o quociente eh zero e o resto eh o dividendo     @
     BL divisao                  @ subrotina efetivamente responsável por realizar a divisão                                           @
 endDivisao:                                                                                                                           @
-    LDMFD sp!, {r1, r2, r4, r6-r11, lr}                                                                                               @
+    LDMFD sp!, {r0,r1, r2, r4, r6-r11, lr}                                                                                               @
     MOV pc, lr                                                                                                                        @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@         
 

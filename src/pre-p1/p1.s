@@ -1,30 +1,39 @@
-@Esse código foi desenvolvido para a aula 3 do curso PCS3732- Laboratório de Processadores - 2020
-@Feito pelos alunos:
+@Esse código foi desenvolvido para a P1 do curso PCS3732- Laboratório de Processadores - 2020
+@Feito pelo aluno:
 @Felipe Kenzo Shiraishi - 10262700
-@Hector Kobayashi Yassuda - 10333289
-@Vitor Hugo Perles - 9285492
 
-@Para compilar junto
-@arm-elf-gcc -Wall -g -o ../bin/pre-p1/programa-final main.s [...].s division.s
+@Para compilar
+@arm-elf-gcc -Wall -g -o pre-p1 p1 p1.s
 
 @To run and debug:
-@arm-elf-gdb division
-@(gdb) target sim
-@(gdb) load
-@(gdb) break main
-@(gdb) run
-@(gdb) continue
+@gdb p1
 
     .text
-    .globl division
+    .globl main
 
-@ r0: quociente (resultado da divisão)
-@ r1: resto
-@ r2: dividendo
-@ r3: divisor
-@ r4: tamanho em bits do dividendo
-@ r5: tamanho em bits do divisor
-@ r6: registrador auxiliar
+main:
+    LDR r1, N @ Carrego em r1 a entrada;
+    LDR r8, N @referencia
+    MOV r8, r8, lsr #1
+    ADD r8, r8, #1
+    ADR r9, divide @ Carrego em r9 o endereço onde guardar os números pelos quais N é divisível.
+    LDR r10, minus @ O demarcador 0xffffffff
+    LDR r2, =0x2
+main_loop:
+    CMP r2, r8 @ Chegou ao limite?
+    BEQ last_entry
+    BL division @ realizo a divisão
+    CMP r5, #0   @ tem resto?
+    STREQ r2, [r9]    @ armazena
+    ADDEQ r9, r9, #4   @ incrementa o ponteiro
+    ADD r2, r2, #1  @Incrementa
+    B main_loop
+last_entry:
+    STMIA r9!, {r10}
+    B end
+end:
+    mov r10,r0
+    SWI 0x0
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @   Call point da subrotina de divisão                                  @ 
@@ -152,3 +161,7 @@ ShiftDivisor:             @rotina para alinhar as casas do dividendo e do diviso
     LDMFD sp!, {lr}                                                                                                 @
     MOV pc, lr                                                                                                      @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+minus: .word 0xFFFFFFFF
+N: .word 240
+divide: .word 0
