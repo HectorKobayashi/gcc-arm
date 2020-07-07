@@ -16,16 +16,22 @@
 @(gdb) continue
 
     .text
-    .globl main
-main:
-    LDR r1, input
-    BL is_prime
-    B end
-
+    .globl is_prime
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@   Call point da subrotina de is_prime                                 @ 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ r4, r2 = is_prime(r1)                                                     @
+@   Argumentos:                                                         @
+@       r1: input                                                       @
+@                                                                       @
+@   Retornos:                                                           @
+@       r4: resultado
+@       r2: menor número pelo qual é divisível                                                   @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ r4 == 0 não é primo
 @ r4 == 1 é primo
 is_prime:
-    STMFD sp!, {r2,r3,r5,lr}
+    STMFD sp!, {r3,r5,lr}
     LDR r2, =0x1
     LDR r4, =0x1
 is_prime_loop:
@@ -33,13 +39,9 @@ is_prime_loop:
     BL division
     CMP r5, #0
     LDREQ r4, =0x0
+    BEQ end_is_prime_loop
     CMP r2, r1, lsr #1
     BLT is_prime_loop
-    LDMFD sp, {r2,r3,r5,lr}
+end_is_prime_loop:
+    LDMFD sp, {r3,r5,lr}
     MOV pc, lr
-
-end:
-    MOV r10, r1
-    SWI 0x0
-
-input: .word 0x4
