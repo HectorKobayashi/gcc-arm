@@ -17,7 +17,7 @@
  @ r0 = input em número
  @ r1 = endereço do vetor de char
 int2str:
-    STMFD sp!, {r0-r10, lr}
+    STMFD sp!, {r0-r10, fp, ip, lr}
     LDR r7, =0
     MOV r6, r1  @ r6 tem o endereço da string
     MOV r1, r0  @ r1 tem o input
@@ -44,7 +44,7 @@ int2str_loop:
 int2str_end:
     LDR r3, =0
     STRB r3, [r6]
-    LDMFD sp!, {r0-r10, pc}
+    LDMFD sp!, {r0-r10, fp, ip, pc}
 
 @ r0 = getOrdem(r1)
 @ retorna em r0 a potência de 10 de r1.
