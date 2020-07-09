@@ -16,6 +16,7 @@
 main:
     LDR r0, =0x123
     LDR r1, =0x321
-    STMFD sp!, {r0,r1}
-    LDMFD sp!, {r0,r1}
+    LDR r2, =0x777
+    STMFD sp!, {r0,r1,r2}
+    LDMFD sp!, {r0,r1,r2}
     MOV r2, r3

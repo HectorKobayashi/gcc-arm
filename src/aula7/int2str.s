@@ -1,9 +1,14 @@
-@Para compilar
-@arm-elf-gcc -Wall -g -o ../bin/aula7/int2str int2str.s
+@Esse código foi desenvolvido para a aula 8 do curso PCS3732- Laboratório de Processadores - 2020
+@Feito pelos alunos:
+@Felipe Kenzo Shiraishi - 10262700
+@Hector Kobayashi Yassuda - 10333289
+@Vitor Hugo Perles - 9285492
+
+@Para compilar junto
+@arm-elf-gcc -Wall -g -o programa-final.out main.c int2str.s division.s
 
 @To run and debug:
-@gdb int2str
-@na pasta bin/aula7
+@gdb programa-final.out
 @(gdb) target sim
 @(gdb) load
 @(gdb) break main
